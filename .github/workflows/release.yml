@@ -1,0 +1,43 @@
+name: Python CI and Docker Image Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python environment
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install flake8 pytest
+
+    - name: Lint code with flake8
+      run: |
+        flake8 .
+
+    - name: Run tests with pytest
+      run: |
+        pytest
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: repository/image:latest
+        dockerfile: Dockerfile
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
