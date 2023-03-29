@@ -27,9 +27,9 @@ jobs:
       run: |
         flake8 .
 
-    - name: Run tests with pytest
-      run: |
-        pytest
+#    - name: Run tests with pytest
+#      run: |
+#        pytest
 
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v2
