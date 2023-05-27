@@ -3,7 +3,8 @@ import torch
 import requests
 from torchvision import transforms
 
-model = torch.hub.load('pytorch/vision:v0.6.0', 'resnet18', pretrained=True).eval()
+model = torch.hub.load('pytorch/vision:v0.6.0', 'resnet18',
+                       pretrained=True).eval()
 response = requests.get("https://git.io/JJkYN")
 labels = response.text.split("\n")
 
